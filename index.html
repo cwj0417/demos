@@ -5,57 +5,59 @@
     <meta charset="UTF-8">
     <title>未来ガジェット研究所</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="未来ガジェット研究所 - 实验室与工具集合">
     <link href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles/atomic.css">
     <link rel="stylesheet" href="styles/index.css">
     <link rel="stylesheet" href="styles/mb.css">
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
 </head>
 
 <body>
+    <canvas id="bg-canvas"></canvas>
+    <div id="cursor-glow" aria-hidden="true"></div>
+    <div class="hud hud--left" aria-hidden="true"><span class="dot"></span>FGL LAB // SYSTEM ONLINE</div>
+    <div class="hud hud--right" aria-hidden="true">NEXT.YO-CWJ.COM // EST. 2018</div>
     <div class="header light-color">
-        <div class="container flex" style="padding: 20px 0;">
+        <div class="container flex">
             <div id="ttd" class="subtitle">
                 <div class="h50" id="pt1"></div>
                 <div class="h50">
-                    <span class="theme-color" id="pt2"></span>
-                    H
-                    <span class="theme-color" id="pt3"></span>
-                    M
+                    <span class="num" id="pt2"></span><span class="unit">H</span>
+                    <span class="num" id="pt3"></span><span class="unit">M</span>
                 </div>
             </div>
-            <div style="width: 277px; height: 47px; margin: 0 auto; background: url('assets/header.png'); background-size: 100%;">
-
-            </div>
+            <div class="brand"></div>
             <div id="tty" class="subtitle">
                 <div class="h50" id="pt4"></div>
                 <div class="h50">
-                    <div class="h40" style="background: #4BC4FF; border-radius: 10px; padding: 1px; box-sizing: border-box;">
+                    <div class="h40">
                         <div id="progress"></div>
                     </div>
-                    <div class="h60 theme-color" id="pt5" style="font-size: 12px; line-height: 14px;"></div>
+                    <div class="h60" id="pt5"></div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="pj-wrap container flex">
-        <div class="pj-menu">
-            <div class="menu-item" onmouseover="showGame()">实验室</div>
-            <div class="menu-item" onmouseover="showProj()">工具</div>
-        </div>
-        <div id="games" class="pj flex"></div>
-        <div id="projects" class="pj flex" style="display: none;"></div>
+    <div class="pj-wrap container">
+        <section class="project-section">
+            <div class="section-head"><span class="section-dot"></span>推荐体验</div>
+            <div id="recommended" class="pj flex"></div>
+        </section>
+        <section class="project-section project-section--more">
+            <div class="section-head"><span class="section-dot"></span>其他项目<em class="section-note">仍可点击</em></div>
+            <div id="others" class="pj flex"></div>
+        </section>
     </div>
 </body>
 
 </html>
 <script src="scripts/index.js"></script>
-<script>
-    function showGame () {
-        $id("games").style.display = ""
-        $id("projects").style.display = "none"
-    }
-    function showProj () {
-        $id("games").style.display = "none"
-        $id("projects").style.display = ""
-    }
-</script>
+<script type="module" src="scripts/three-bg.js"></script>

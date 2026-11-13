@@ -1,181 +1,132 @@
-<html>
-    <head></head>
-    <script src="victor.min.js"></script>
-    <body>
-        <canvas id="canvas" style="border: 1px solid black"></canvas>
-    </body>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#05060f">
+    <meta name="description" content="Super Flip —— 一款霓虹风格的弹球折射街机小游戏。">
+    <title>Super Flip · 霓虹弹球</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23070b18'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%2342e8ff' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23ff4fd8'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="aurora" aria-hidden="true">
+        <span class="orb orb-a"></span>
+        <span class="orb orb-b"></span>
+        <span class="orb orb-c"></span>
+    </div>
+
+    <main class="app">
+        <header class="topbar">
+            <div class="brand">
+                <span class="brand-mark"></span>
+                <span>SUPER</span><span class="brand-flip">FLIP</span>
+            </div>
+            <button class="icon-btn" id="soundBtn" type="button" aria-label="静音">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M4 9.5h3.2L12.5 5v14L7.2 14.5H4z"/>
+                    <path d="M16 8.6a5 5 0 0 1 0 6.8"/>
+                    <path d="M18.8 6a8.6 8.6 0 0 1 0 12"/>
+                </svg>
+                <span class="slash"></span>
+            </button>
+        </header>
+
+        <section class="stage" id="stage">
+            <canvas id="game" width="440" height="700" aria-label="Super Flip 弹球游戏区域">你的浏览器不支持 Canvas，请使用现代浏览器打开。</canvas>
+
+            <div class="hud">
+                <div class="hud-top">
+                    <div class="stat">
+                        <span class="stat-label">SCORE</span>
+                        <span class="stat-value" id="score">0</span>
+                    </div>
+                    <div class="combo" id="combo" aria-hidden="true">×2</div>
+                    <div class="stat stat-right">
+                        <span class="stat-label">WAVE</span>
+                        <span class="stat-value" id="wave">01</span>
+                    </div>
+                </div>
+                <div class="shots" id="shots">
+                    <span class="shots-label">SHOTS</span>
+                    <div class="shots-pips" id="shotsPips">
+                        <i></i><i></i><i></i><i></i><i></i>
+                    </div>
+                </div>
+                <div class="ammo" id="ammo">
+                    <span class="ammo-label">AMMO</span>
+                    <div class="ammo-track"><span class="ammo-fill" id="ammoFill"></span></div>
+                    <span class="ammo-count" id="ammoCount">0</span>
+                </div>
+            </div>
+
+            <div class="toast" id="toast" aria-live="polite">
+                <span class="toast-title" id="toastTitle"></span>
+                <span class="toast-sub" id="toastSub"></span>
+            </div>
+
+            <div class="screen is-visible" id="screenStart">
+                <div class="screen-inner">
+                    <p class="eyebrow">NEON ORB SMASHER</p>
+                    <h1 class="title">SUPER<span>FLIP</span></h1>
+                    <p class="tagline">从顶部向下发射弹幕，弹球会在霓虹能量球之间折射。<br>每关 5 次射击；三角最耐打，菱形最小最灵活。</p>
+                    <button class="cta" id="startBtn" type="button">开始游戏 <span class="arrow">→</span></button>
+                    <div class="tips">
+                        <span>点击发射</span>
+                        <span>三角最耐打</span>
+                        <span>补给球 +2 弹药</span>
+                    </div>
+                    <p class="best-line">HIGH SCORE <b id="bestStart">0</b></p>
+                    <p class="boot-hint" id="bootHint" hidden>请在项目目录执行 <code>npm start</code>，再访问 http://localhost:4321</p>
+                </div>
+            </div>
+
+            <div class="screen" id="screenClear">
+                <div class="screen-inner">
+                    <p class="eyebrow">WAVE <span id="clearWave">01</span> CLEARED</p>
+                    <h2 class="headline">星域清空</h2>
+                    <div class="score-big" id="clearScore">0</div>
+                    <div class="stats">
+                        <div><span>剩余射击</span><b id="clearAmmo">0</b></div>
+                        <div><span>清场奖励</span><b id="clearBonus">+0</b></div>
+                    </div>
+                    <button class="cta" id="nextBtn" type="button">进入下一波 <span class="arrow">→</span></button>
+                </div>
+            </div>
+
+            <div class="screen" id="screenOver">
+                <div class="screen-inner">
+                    <p class="eyebrow">OUT OF SHOTS</p>
+                    <h2 class="headline">射击次数耗尽</h2>
+                    <div class="score-big" id="overScore">0</div>
+                    <div class="stats">
+                        <div><span>最高分</span><b id="overBest">0</b></div>
+                        <div><span>抵达波次</span><b id="overWave">01</b></div>
+                    </div>
+                    <button class="cta" id="retryBtn" type="button">再来一局 <span class="arrow">↻</span></button>
+                </div>
+            </div>
+        </section>
+
+        <footer class="foot">
+            <span class="dot"></span>
+            <span>瞄准</span><span class="sep">/</span>
+            <span>点击发射</span><span class="sep">/</span>
+            <span>折射清场</span>
+        </footer>
+    </main>
+
+    <script type="module" src="./src/main.js"></script>
+    <script>
+        // 直接双击打开 file:// 时 ES Module 无法加载，给出启动提示
+        window.setTimeout(function () {
+            if (!window.__superflipBooted) {
+                document.getElementById('bootHint').hidden = false
+            }
+        }, 1500)
+    </script>
+</body>
 </html>
-<script>
-    // defines
-    const WIDTH = 350
-    const HEIGHT = 550
-    const canvas = document.getElementById('canvas')
-    canvas.width = WIDTH
-    canvas.height = HEIGHT
-    const ctx = canvas.getContext('2d')
-    const g = 0.04 // gravity
-    let total = 1
-    let ready = true
-    let shootHandle = null
-
-    // object
-    class Bullets {
-        constructor (x = WIDTH / 2, y = 0, vx = 0, vy = 0, r = 5) {
-            this.r = r
-            this.x = x
-            this.y = y
-            this.vx = vx
-            this.vy = vy
-        }
-    }
-
-    class Circle {
-        constructor (x, y, r, rotate, health) {
-            this.x = x
-            this.y = y
-            this.r = r
-            this.rotate = 0
-            this.health = health
-        }
-        includes (x, y, r) {
-            let dis = Math.pow(r + this.r, 2) - Math.pow(x - this.x, 2) - Math.pow(y - this.y, 2)
-            if (dis >= 15) {
-                if (dis >= 5) {
-                    this.health--
-                }
-                return true
-            }
-        }
-        flipTo (x, y, vx, vy) {
-            let inDeg = new Victor(vy, vx).angleDeg()
-            let heartDeg = new Victor(y - this.y, x - this.x).angleDeg()
-            return new Victor(vx, vy).rotateDeg(2 * heartDeg - inDeg)
-        }
-        draw () {
-            ctx.beginPath()
-            ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI)
-            ctx.stroke()
-            ctx.font = '12px Georgia'
-            ctx.fillText(this.health, this.x - 8, this.y + 4)
-            ctx.closePath()
-        }
-    }
-
-
-    // context data
-    let bullets = []
-    let targets = []
-
-    // for test
-
-    total = 10
-    targets.push(new Circle(100, 75, 15, 0, 100))
-    targets.push(new Circle(200, 150, 15, 0, 100))
-    targets.push(new Circle(300, 470, 15, 0, 100))
-    targets.push(new Circle(100, 340, 15, 0, 100))
-    targets.push(new Circle(200, 250, 15, 0, 100))
-    targets.push(new Circle(300, 300, 15, 0, 100))
-
-    // test end
-
-    let calc = () => {
-        calcBullets()
-        calcBorder()
-        calcCollision()
-    }
-
-    let calcBullets = () => {
-        for (let bullet of bullets) {
-            bullet.vy += g
-            bullet.x += bullet.vx
-            bullet.y += bullet.vy
-        }
-    }
-
-    let calcBorder = () => {
-        for (let i = 0; i < bullets.length; i++) {
-            let bullet = bullets[i]
-            if (bullet.x <= bullet.r || bullet.x >= WIDTH - bullet.r) {
-                bullet.vx = -bullet.vx
-            }
-            if (bullet.y <= bullet.r) {
-                bullet.vy = -bullet.vy
-            }
-            if (bullet.y > HEIGHT) {
-                bullets.splice(i, 1)
-                total += 1
-            }
-        }
-        if (!bullets.length) {
-            ready = true
-        }
-    }
-
-    let calcCollision = () => {
-        for (let bullet of bullets) {
-            for (let i = 0; i < targets.length; i++) {
-                if (targets[i].includes(bullet.x, bullet.y, bullet.r)) {
-                    let {x, y} = targets[i].flipTo(bullet.x, bullet.y, bullet.vx, bullet.vy)
-                    bullet.vx = x
-                    bullet.vy = y
-                    break
-                }
-            }
-        }
-    }
-
-    let draw = () => {
-        ctx.clearRect(0, 0, WIDTH, HEIGHT)
-        drawBullets()
-        drawTargets()
-        drawScore()
-    }
-
-    let drawBullets = () => {
-        for (let bullet of bullets) {
-            ctx.beginPath()
-            ctx.arc(bullet.x, bullet.y, bullet.r, 0, 2 * Math.PI)
-            ctx.stroke()
-            ctx.closePath()
-        }
-    }
-
-    let drawTargets = () => {
-        targets = targets.filter(each => each.health > 0)
-        for (let target of targets) {
-            target.draw()
-        }
-    }
-
-    let drawScore = () => {
-        ctx.beginPath()
-        ctx.font = '20px Georgia'
-        ctx.fillText(total, WIDTH / 2, 15)
-        ctx.closePath()
-    }
-
-    let render = () => {
-        calc()
-        draw()
-        requestAnimationFrame(render)
-    }
-
-    // init
-
-    requestAnimationFrame(render)
-
-    canvas.onclick = e => {
-        if (ready) {
-            ready = false
-            let {x, y} = new Victor(e.offsetX, e.offsetY).subtract(new Victor(WIDTH / 2, 0)).normalize()
-            shootHandle = setInterval(() => {
-                if (total) {
-                    total --
-                    bullets.push(new Bullets(WIDTH / 2, 10, x * 4 , y * 4))
-                } else {
-                    clearInterval(shootHandle)
-                }
-            }, 100)
-        }
-    }
-</script>

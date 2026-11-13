@@ -9,6 +9,7 @@ const analyzeTTL = time => {
 }
 const $id = id => document.getElementById(id)
 const render = (content, elm) => (elm.innerHTML !== content) && (elm.innerHTML = content)
+let cardCount = 0
 const ttDe = () => {
     let secondToDay = (nextDay() - new Date()) / 1000
     let {h, m} = analyzeTTL(secondToDay)
@@ -54,10 +55,10 @@ const toggleClass = (ele, cls) => {
 }
 const githubPrefix = "https://github.com/cwj0417/"
 const demoDir = "demos/"
-const addProject = (title, options, desc, isGame) => {
-    let {github, homepage, demonstration, download} = options
+const addProject = (title, options, desc, group) => {
+    let {github, homepage, demonstration, download, bg} = options
     let $project = document.createElement("div")
-    $project.className = "project"
+    $project.className = group === "recommended" ? "project" : "project is-muted"
     let $name = document.createElement("div")
     $name.className = "name"
     $name.innerHTML = title
@@ -66,15 +67,20 @@ const addProject = (title, options, desc, isGame) => {
     $title.className = "title theme-color"
     let $desc = document.createElement("div")
     $desc.className = "desc light-color"
+    let $index = document.createElement("div")
+    $index.className = "card-index"
+    const target = $id(group === "recommended" ? "recommended" : "others")
+    $index.textContent = String(++cardCount).padStart(2, "0")
+    $project.appendChild($index)
     $project.appendChild($title)
     $project.appendChild($desc)
-    document.getElementById(isGame ? "games" : "projects").appendChild($project)
+    target.appendChild($project)
 
     // github
     if (github) {
         let $github_a = document.createElement("a")
         let $github_icon = document.createElement("i")
-        $github_a.href = `${githubPrefix}/${github}`
+        $github_a.href = `${githubPrefix}${github}`
         $github_a.target = "_blank"
         $github_icon.className = "fa fa-github"
         $github_a.appendChild($github_icon)
@@ -104,7 +110,7 @@ const addProject = (title, options, desc, isGame) => {
     if (download) {
         let $download_a = document.createElement("a")
         let $download_icon = document.createElement("i")
-        $download_a.href = `${githubPrefix}/${download}/releases`
+        $download_a.href = `${githubPrefix}${download}/releases`
         $download_a.target = "_blank"
         $download_icon.className = "fa fa-download"
         $download_a.appendChild($download_icon)
@@ -112,19 +118,50 @@ const addProject = (title, options, desc, isGame) => {
     }
 
     //desc
-    $desc.innerHTML = desc
+    $desc.innerHTML = desc || ""
 
-    $project.style.backgroundImage = `url(assets/itembg/${title}.png)`
+    $project.style.backgroundImage = `url(assets/itembg/${bg || `${title}.png`})`
 }
-addProject("泡泡龙", {github: "canvas", demonstration: "ppl/index.html"}, "2014年研究canvas时做的游戏, 自己写的碰撞判断", true)
-addProject("时钟", {github: "canvas", demonstration: "clock/index.html"}, "2014年研究canvas时照着教程做的", true)
-addProject("yohane", {github: "yohane", homepage: githubPrefix + "yohane"}, "基于命令行, 把md文件转化为ppt")
-addProject("jin", {github: "jin", homepage: "https://jin.yo-cwj.com"}, "配色系统")
-addProject("钢琴模拟器", {github: "keyboardJoy", demonstration: "keyboard/index.html"}, "加载midi文件来模拟钢琴弹奏", true)
-addProject("弹一弹", {github: "superflip", demonstration: "flip/index.html"}, "小游戏", true)
-addProject("carrot", {github: "carrot"}, "基于rn的菜谱app")
-addProject("vocabook", {github: "lock-on", download: "lock-on"}, "背单词软件")
-addProject("yosoro", {github: "yosoro"}, "chrome插件, 提供多种实用功能")
-addProject("gistore", {github: "gistore", homepage: githubPrefix + "gistore"}, "使用github的gist服务来备份单机应用")
-addProject("did", {github: "did", homepage: githubPrefix + "did", download: "did"}, "chrome插件, 记录每天做的事和todos.")
-addProject("油价走势图", {demonstration: "oil_price/index.html"})
+
+addProject("gallery", {github: "gallery", homepage: "https://gallery.yo-cwj.com"}, "3D 画廊，环视浏览作品", "recommended")
+addProject("钢琴模拟器", {github: "keyboardJoy", homepage: "https://keyboard.yo-cwj.com"}, "加载midi文件来模拟钢琴弹奏", "recommended")
+addProject("弹一弹", {github: "superflip", homepage: "https://flip.yo-cwj.com"}, "小游戏", "recommended")
+addProject("油价走势图", {demonstration: "oil_price/index.html"}, "上海 92/95/0# 油价历史走势", "recommended")
+addProject("puzzle", {github: "puzzle", homepage: "https://puzzle.yo-cwj.com"}, "上传图片，打散后拼回原样", "recommended")
+addProject("score", {homepage: "https://score.yo-cwj.com", bg: "score.svg"}, "基于 OpenSheetMusicDisplay 渲染 MusicXML 乐谱", "recommended")
+addProject("unmei", {github: "unmei", homepage: "https://unmei.yo-cwj.com", bg: "unmei.svg"}, "UNMEI · 八字排盘", "recommended")
+
+addProject("did", {github: "did", homepage: githubPrefix + "did", download: "did"}, "chrome插件, 记录每天做的事和todos.", "others")
+addProject("gistore", {github: "gistore", homepage: githubPrefix + "gistore"}, "使用github的gist服务来备份单机应用", "others")
+addProject("yosoro", {github: "yosoro"}, "chrome插件, 提供多种实用功能", "others")
+addProject("vocabook", {github: "lock-on", download: "lock-on"}, "背单词软件", "others")
+addProject("carrot", {github: "carrot"}, "基于rn的菜谱app", "others")
+addProject("jin", {github: "jin", homepage: "https://jin.yo-cwj.com"}, "配色系统", "others")
+addProject("yohane", {github: "yohane", homepage: githubPrefix + "yohane"}, "基于命令行, 把md文件转化为ppt", "others")
+addProject("时钟", {github: "canvas", demonstration: "clock/index.html"}, "2014年研究canvas时照着教程做的", "others")
+addProject("泡泡龙", {github: "canvas", demonstration: "ppl/index.html"}, "2014年研究canvas时做的游戏, 自己写的碰撞判断", "others")
+
+const replayCards = () => {
+    document.querySelectorAll(".project").forEach((card, index) => {
+        card.style.animation = "none"
+        void card.offsetWidth
+        card.style.animation = `card-in 0.55s cubic-bezier(0.2, 0.75, 0.25, 1) ${index * 35}ms both`
+    })
+}
+replayCards()
+
+const trackPointer = element => {
+    element.addEventListener("pointermove", event => {
+        const rect = element.getBoundingClientRect()
+        element.style.setProperty("--mx", `${event.clientX - rect.left}px`)
+        element.style.setProperty("--my", `${event.clientY - rect.top}px`)
+    })
+}
+document.querySelectorAll(".project").forEach(trackPointer)
+
+const cursorGlow = $id("cursor-glow")
+if (cursorGlow && window.matchMedia("(hover: hover)").matches) {
+    window.addEventListener("pointermove", event => {
+        cursorGlow.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`
+    }, {passive: true})
+}

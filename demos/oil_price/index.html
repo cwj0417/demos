@@ -1,31 +1,115 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>oil price</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.8/vue.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>油价走势 · 上海</title>
     <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
-    <div id="app">
-        <div class="main">
-            <svg viewbox="0 0 1000 618" style="height: 100%;">
-                <!--框框-->
-                <rect x="0" y="0" fill="white" stroke="black" stroke-dasharray="5px" width="1000" height="618"/>
-                <!--图标内容-->
-                <path :d="path_92" class="p92"></path>
-                <path :d="path_95" class="p95"></path>
-                <!--text 和x轴数字-->
-                <text v-for="(item, index) of text" :key="index" :x="item.x" :y="item.y" :class="item.clz">{{item.content}}</text>
-                <line v-for="(item, index) of axis" :key="index" :x1="item.x1" :y1="item.y1" :x2="item.x2" :y2="item.y2" class="l-axis"></line>
-                <!--x轴辅助线-->
-            </svg>
+    <div class="glow glow-a"></div>
+    <div class="glow glow-b"></div>
+    <header class="top">
+        <div class="brand">
+            <span class="brand-mark">OIL</span>
+            <span class="brand-sub">上海成品油价格</span>
         </div>
-    </div>
+        <div class="top-meta">
+            <span class="pulse"></span>
+            更新于 <b id="updated">—</b>
+            <span class="divider"></span>
+            数据来源 <a href="https://data.eastmoney.com/cjsj/yjtz/default.html" target="_blank" rel="noreferrer">东方财富</a>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <section class="price-grid" id="price-grid">
+            <article class="price-card" data-key="p92">
+                <div class="price-head"><span class="tag tag-92"></span>92# 汽油</div>
+                <div class="price-body">
+                    <span class="price-value">—</span>
+                    <span class="price-unit">元/升</span>
+                </div>
+                <div class="price-foot">
+                    <span class="delta">—</span>
+                    <svg class="spark" viewBox="0 0 120 32" preserveAspectRatio="none"></svg>
+                </div>
+            </article>
+            <article class="price-card" data-key="p95">
+                <div class="price-head"><span class="tag tag-95"></span>95# 汽油</div>
+                <div class="price-body">
+                    <span class="price-value">—</span>
+                    <span class="price-unit">元/升</span>
+                </div>
+                <div class="price-foot">
+                    <span class="delta">—</span>
+                    <svg class="spark" viewBox="0 0 120 32" preserveAspectRatio="none"></svg>
+                </div>
+            </article>
+            <article class="price-card" data-key="p0">
+                <div class="price-head"><span class="tag tag-0"></span>0# 柴油</div>
+                <div class="price-body">
+                    <span class="price-value">—</span>
+                    <span class="price-unit">元/升</span>
+                </div>
+                <div class="price-foot">
+                    <span class="delta">—</span>
+                    <svg class="spark" viewBox="0 0 120 32" preserveAspectRatio="none"></svg>
+                </div>
+            </article>
+        </section>
+
+        <section class="panel chart-panel">
+            <div class="panel-head">
+                <div class="legend" id="legend">
+                    <button class="chip active" data-series="p92"><i class="dot dot-92"></i>92#</button>
+                    <button class="chip active" data-series="p95"><i class="dot dot-95"></i>95#</button>
+                    <button class="chip active" data-series="p0"><i class="dot dot-0"></i>0# 柴油</button>
+                </div>
+                <div class="ranges" id="ranges">
+                    <button data-range="1y">1 年</button>
+                    <button data-range="3y" class="active">3 年</button>
+                    <button data-range="5y">5 年</button>
+                    <button data-range="all">全部</button>
+                </div>
+            </div>
+            <div class="chart-wrap" id="chart-wrap">
+                <svg id="chart" role="img" aria-label="上海油价历史走势图"></svg>
+                <div class="tooltip" id="tooltip" hidden></div>
+            </div>
+            <div class="chart-foot" id="chart-foot"></div>
+        </section>
+
+        <section class="panel table-panel">
+            <div class="panel-head">
+                <h2>近期调价</h2>
+                <span class="hint">单位：元/升 · 涨跌以上一次调价为基准</span>
+            </div>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>调价日期</th>
+                            <th class="num">92# 汽油</th>
+                            <th class="num">95# 汽油</th>
+                            <th class="num">0# 柴油</th>
+                            <th class="num">92# 涨跌</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer class="foot">
+            <span>共 <b id="total">—</b> 次调价记录</span>
+            <span>数据仅供参考，以加油站实际挂牌价为准</span>
+        </footer>
+    </main>
+
+    <script src="./index.js"></script>
 </body>
-<script src="./price.js"></script>
-<script src="./index.js"></script>
+
 </html>

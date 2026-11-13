@@ -1,28 +1,38 @@
-@media (max-width: 1000px){
+@media (max-width: 1000px) {
     .subtitle {
+        display: none;
+    }
+    .hud {
         display: none;
     }
     .container {
         width: auto;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    .header .container {
+        justify-content: center;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    .brand {
+        width: 230px;
+        height: 39px;
     }
     .pj-wrap {
         display: block;
+        padding-top: 16px;
     }
-    .pj-menu {
-        width: 200px;
-        display: flex;
-        margin: 0 auto;
-    }
-    .menu-item {
-        width: 80px;
-        margin: 0 10px 10px;
-        padding: 0;
+    .project-section + .project-section {
+        margin-top: 26px;
     }
     .pj {
+        justify-content: center;
         width: auto;
     }
     .project {
-        margin: 10px auto;
-        border-radius: 10px;
+        width: min(282px, 100%);
+        margin: 0 0 12px;
+        border-radius: 12px;
     }
 }

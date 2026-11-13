@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0908">
+    <title>wwj gallery</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230a0908'/%3E%3Ctext x='32' y='43' font-size='30' text-anchor='middle' fill='%23c8a97e' font-family='Georgia,serif'%3Ew%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="./assets/index.css">
+    <script src="./gallery/list.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <div class="vignette"></div>
+
+    <header class="hud hud-top">
+        <a class="brand" href="./">wwj <em>gallery</em></a>
+        <div class="hint">
+            <span>拖拽环视</span>
+            <span>WASD 行走</span>
+            <span>滚轮前移</span>
+            <span>点击画作</span>
+        </div>
+    </header>
+
+    <div class="hint-bar">点击画作查看详情 · Shift 加速 · Esc 关闭详情</div>
+
+    <div class="tooltip" id="tooltip"></div>
+    <div class="crosshair" aria-hidden="true"></div>
+
+    <div class="intro" id="intro">
+        <div class="intro-kicker">A SMALL PRIVATE GALLERY</div>
+        <h1 class="intro-title">wwj gallery</h1>
+        <div class="intro-sub">正在走进画廊</div>
+    </div>
+
+    <div class="loader" id="loader">
+        <div class="loader-inner">
+            <div class="loader-title">wwj <em>gallery</em></div>
+            <div class="loader-sub">正在布展</div>
+            <div class="loader-bar"><span id="loaderFill"></span></div>
+            <div class="loader-pct" id="loaderPct">0%</div>
+        </div>
+    </div>
+
+    <div class="detail" id="detail" role="dialog" aria-modal="true" aria-labelledby="detailTitle" aria-hidden="true">
+        <div class="detail-backdrop"></div>
+        <figure class="detail-card">
+            <img id="detailImg" alt="">
+            <figcaption>
+                <div class="detail-kicker">ARTWORK</div>
+                <h2 id="detailTitle"></h2>
+                <p id="detailDesc"></p>
+                <time id="detailMeta"></time>
+            </figcaption>
+        </figure>
+        <button class="detail-close" id="detailClose" aria-label="关闭">×</button>
+    </div>
+
+    <script type="module" src="./src/three/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+name: Update oil price
+
+on:
+  schedule:
+    # 国内成品油约每 10 个工作日调价一次（每月 2-3 次），无需每天运行
+    # 每周一、周四 09:00（北京时间）各检查一次即可
+    - cron: "0 1 * * 1,4"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-oil-price
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Fetch latest oil price
+        run: node scripts/fetch-oil-price.mjs
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add demos/oil_price/data.json
+          if git diff --cached --quiet; then
+            echo "油价未变化，无需提交"
+            exit 0
+          fi
+          git commit -m "chore: update oil price data $(date -u +%F)"
+          git push
