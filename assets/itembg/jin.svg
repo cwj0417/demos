@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="240" viewBox="0 0 400 240">
+    <defs>
+        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#181a40"/>
+            <stop offset="0.55" stop-color="#0a1228"/>
+            <stop offset="1" stop-color="#040a14"/>
+        </linearGradient>
+        <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="rgba(157,123,255,0.3)"/>
+            <stop offset="0.6" stop-color="rgba(75,196,255,0.1)"/>
+            <stop offset="1" stop-color="rgba(75,196,255,0)"/>
+        </radialGradient>
+        <linearGradient id="c1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#e9fdff"/>
+            <stop offset="1" stop-color="#2a86c8"/>
+        </linearGradient>
+        <linearGradient id="c2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#e6fff8"/>
+            <stop offset="1" stop-color="#1f8a63"/>
+        </linearGradient>
+        <linearGradient id="c3" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff6e2"/>
+            <stop offset="1" stop-color="#c9861f"/>
+        </linearGradient>
+        <linearGradient id="c4" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffe9fa"/>
+            <stop offset="1" stop-color="#b83f92"/>
+        </linearGradient>
+        <linearGradient id="c5" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f0eaff"/>
+            <stop offset="1" stop-color="#6a4fd0"/>
+        </linearGradient>
+    </defs>
+    <rect width="400" height="240" fill="url(#bg)"/>
+    <ellipse cx="200" cy="128" rx="190" ry="112" fill="url(#glow)"/>
+    <g fill="rgba(191,233,255,0.5)">
+        <circle cx="62" cy="40" r="1.4"/>
+        <circle cx="338" cy="46" r="1.2"/>
+        <circle cx="354" cy="190" r="1.4"/>
+        <circle cx="46" cy="178" r="1"/>
+        <circle cx="190" cy="26" r="1"/>
+    </g>
+    <g transform="translate(200 212)" fill="none" stroke="rgba(157,123,255,0.25)">
+        <circle r="96"/>
+        <circle r="120" stroke-dasharray="3 8"/>
+    </g>
+    <g transform="translate(200 206)" opacity="0.85">
+        <g transform="rotate(-28)">
+            <rect x="-22" y="-96" width="44" height="96" rx="7" fill="url(#c1)" opacity="0.72" stroke="rgba(233,250,255,0.7)"/>
+        </g>
+        <g transform="rotate(-14)">
+            <rect x="-22" y="-106" width="44" height="106" rx="7" fill="url(#c2)" opacity="0.78" stroke="rgba(233,250,255,0.7)"/>
+        </g>
+        <g>
+            <rect x="-24" y="-116" width="48" height="116" rx="8" fill="url(#c3)" opacity="0.9" stroke="rgba(255,246,226,0.9)"/>
+            <circle cx="0" cy="-96" r="5" fill="rgba(4,10,20,0.5)"/>
+        </g>
+        <g transform="rotate(14)">
+            <rect x="-22" y="-106" width="44" height="106" rx="7" fill="url(#c4)" opacity="0.78" stroke="rgba(233,250,255,0.7)"/>
+        </g>
+        <g transform="rotate(28)">
+            <rect x="-22" y="-96" width="44" height="96" rx="7" fill="url(#c5)" opacity="0.72" stroke="rgba(233,250,255,0.7)"/>
+        </g>
+    </g>
+    <g stroke="rgba(233,250,255,0.35)" fill="none">
+        <path d="M70 74 L96 90"/>
+        <path d="M330 82 L306 96"/>
+        <path d="M110 36 L124 50"/>
+    </g>
+    <g fill="rgba(233,250,255,0.8)">
+        <circle cx="70" cy="74" r="2.2"/>
+        <circle cx="330" cy="82" r="2"/>
+        <circle cx="306" cy="96" r="1.6"/>
+    </g>
+</svg>

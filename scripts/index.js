@@ -123,20 +123,20 @@ const addProject = (title, options, desc, group) => {
     $project.style.backgroundImage = `url(assets/itembg/${bg || `${title}.png`})`
 }
 
-addProject("gallery", {github: "gallery", homepage: "https://gallery.yo-cwj.com"}, "3D 画廊，环视浏览作品", "recommended")
-addProject("钢琴模拟器", {github: "keyboardJoy", homepage: "https://keyboard.yo-cwj.com"}, "加载midi文件来模拟钢琴弹奏", "recommended")
-addProject("弹一弹", {github: "superflip", homepage: "https://flip.yo-cwj.com"}, "小游戏", "recommended")
-addProject("油价走势图", {demonstration: "oil_price/index.html"}, "上海 92/95/0# 油价历史走势", "recommended")
-addProject("puzzle", {github: "puzzle", homepage: "https://puzzle.yo-cwj.com"}, "上传图片，打散后拼回原样", "recommended")
+addProject("gallery", {github: "gallery", homepage: "https://gallery.yo-cwj.com", bg: "gallery.svg"}, "3D 画廊，环视浏览作品", "recommended")
+addProject("钢琴模拟器", {github: "keyboardJoy", homepage: "https://keyboard.yo-cwj.com", bg: "piano.svg"}, "加载midi文件来模拟钢琴弹奏", "recommended")
+addProject("弹一弹", {github: "superflip", homepage: "https://flip.yo-cwj.com", bg: "flip.svg"}, "小游戏", "recommended")
+addProject("油价走势图", {demonstration: "oil_price/index.html", bg: "oil.svg"}, "上海 92/95/0# 油价历史走势", "recommended")
+addProject("puzzle", {github: "puzzle", homepage: "https://puzzle.yo-cwj.com", bg: "puzzle.svg"}, "上传图片，打散后拼回原样", "recommended")
 addProject("score", {homepage: "https://score.yo-cwj.com", bg: "score.svg"}, "基于 OpenSheetMusicDisplay 渲染 MusicXML 乐谱", "recommended")
 addProject("unmei", {github: "unmei", homepage: "https://unmei.yo-cwj.com", bg: "unmei.svg"}, "UNMEI · 八字排盘", "recommended")
+addProject("jin", {github: "jin", homepage: "https://jin.yo-cwj.com", bg: "jin.svg"}, "配色系统", "recommended")
 
 addProject("did", {github: "did", homepage: githubPrefix + "did", download: "did"}, "chrome插件, 记录每天做的事和todos.", "others")
 addProject("gistore", {github: "gistore", homepage: githubPrefix + "gistore"}, "使用github的gist服务来备份单机应用", "others")
 addProject("yosoro", {github: "yosoro"}, "chrome插件, 提供多种实用功能", "others")
 addProject("vocabook", {github: "lock-on", download: "lock-on"}, "背单词软件", "others")
 addProject("carrot", {github: "carrot"}, "基于rn的菜谱app", "others")
-addProject("jin", {github: "jin", homepage: "https://jin.yo-cwj.com"}, "配色系统", "others")
 addProject("yohane", {github: "yohane", homepage: githubPrefix + "yohane"}, "基于命令行, 把md文件转化为ppt", "others")
 addProject("时钟", {github: "canvas", demonstration: "clock/index.html"}, "2014年研究canvas时照着教程做的", "others")
 addProject("泡泡龙", {github: "canvas", demonstration: "ppl/index.html"}, "2014年研究canvas时做的游戏, 自己写的碰撞判断", "others")
